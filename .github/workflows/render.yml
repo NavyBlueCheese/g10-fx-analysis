@@ -21,6 +21,8 @@ jobs:
         with:
           use-public-rspm: true
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: Install R packages
         run: |
           install.packages(c(
