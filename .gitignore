@@ -1,0 +1,16 @@
+# R environment
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# R project files
+*.Rproj
+
+# renv / packrat
+renv/
+packrat/
+
+# OS
+.DS_Store
+Thumbs.db

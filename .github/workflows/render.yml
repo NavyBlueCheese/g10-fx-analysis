@@ -1,0 +1,43 @@
+name: Render Analysis
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'analysis.Rmd'
+      - '.github/workflows/render.yml'
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install R packages
+        run: |
+          install.packages(c(
+            "rmarkdown", "knitr",
+            "jsonlite", "dplyr", "tidyr", "ggplot2",
+            "purrr", "lubridate", "patchwork", "scales", "zoo"
+          ))
+        shell: Rscript {0}
+
+      - name: Render analysis.Rmd
+        run: rmarkdown::render("analysis.Rmd")
+        shell: Rscript {0}
+
+      - name: Commit rendered output
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -f analysis.md analysis_files/ 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "render: update analysis.md [skip ci]"
+          git push
