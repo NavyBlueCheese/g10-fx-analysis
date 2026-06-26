@@ -69,10 +69,13 @@ fetch_rates <- function(start, end, base = "USD") {
     format(end,   "%Y-%m-%d"),
     base
   )
-  resp <- fromJSON(url)
+  # simplifyDataFrame=FALSE keeps rates as a named list of named vectors
+  # (keys = dates) rather than letting jsonlite collapse it into a data.frame
+  # where names() would return currency codes instead of date strings.
+  resp <- fromJSON(url, simplifyDataFrame = FALSE)
   map_dfr(names(resp$rates), function(d) {
     r <- resp$rates[[d]]
-    tibble(date = as.Date(d), currency = names(r), rate = unname(r))
+    tibble(date = as.Date(d), currency = names(r), rate = as.numeric(unlist(r)))
   }) %>%
     filter(currency %in% G10)
 }
