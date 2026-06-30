@@ -1,9 +1,8 @@
 # G10 FX Analysis
 
-A statistical study of G10 foreign exchange return dynamics, written in R.
+A statistical study of G10 foreign exchange return dynamics written in R.
 
-Two years of daily spot rates are pulled from the [Frankfurter API](https://frankfurter.dev)
-(no API key needed). The notebook then runs a set of classic quantitative checks:
+Two years of daily spot rates are pulled from the [Frankfurter API](https://frankfurter.dev). The notebook then runs a set of classic quantitative checks:
 correlation structure, return distributions, rolling Sharpe ratios, and volatility
 clustering.
 
@@ -43,7 +42,7 @@ rmarkdown::render("analysis.Rmd")
 
 Or open `analysis.Rmd` in RStudio and press **Knit**.
 
-Requires R 4.1+. No API key or local data files needed, everything is fetched live.
+Requires R 4.1+. (everything is fetched live)
 
 ## Tech Stack
 
